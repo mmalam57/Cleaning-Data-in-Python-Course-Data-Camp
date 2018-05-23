@@ -1,0 +1,36 @@
+####In tidy data we have two methods 
+###Melt vs Pivot 
+
+##In melt = we turn columns in rows 
+
+import pandas as pd
+df = pd.read_csv('ebola.csv')
+print(df.head())
+df1 = pd.melt(frame= df, id_vars=['Date', 'Day'], var_name='Cause', value_name='Result')
+print(df1.head())
+
+
+##In Pivot = we turn rows into columns 
+
+#.pivot_table() has an index parameter which you can use to specify the columns that you don't want pivoted: 
+#It is similar to the id_vars parameter of pd.melt(). Two other parameters that 
+#you have to specify are columns (the name of the column you want to pivot), 
+#and values (the values to be used when the column is pivoted). 
+
+import pandas as pd
+df = pd.read_csv('ebola.csv')
+print(df.head())
+
+#Melting into rows
+df1 = pd.melt(frame= df, id_vars=['Date', 'Day'], var_name='Cause', value_name='Result')
+print(df1.head())
+
+#pivot into columns
+df2 = df1.pivot_table(index = ['Date', 'Day'], columns ='Cause', values= 'Result')
+print(df2.head())
+
+#Reseting Index
+df2 = df2.reset_index()
+
+# Print the new index of 
+print(df2.index)
